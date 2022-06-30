@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import type { PointAwardRecord } from "../lib/points";
+import { PointAwardRecord, usePointRecords } from "../lib/points";
 import { useSupabase } from "../lib/hooks/supabase";
 import PointsTable from "../components/PointsTable";
-import testData from "../lib/data/test.json";
 import SiteFooter from "../components/SiteFooter";
 import AccountInfo from "../components/AccountInfo";
 import Auth from "../components/Auth";
@@ -12,15 +11,7 @@ import Link from "next/link";
 const HomePage: NextPage = () => {
   const session = useSupabase();
 
-  // TODO: Replace me with database
-  const records: PointAwardRecord[] = testData.map(
-    ({ timestamp, ...fields }) => {
-      return {
-        timestamp: new Date(timestamp),
-        ...fields,
-      };
-    }
-  );
+  const records: PointAwardRecord[] = usePointRecords();
 
   return (
     <>

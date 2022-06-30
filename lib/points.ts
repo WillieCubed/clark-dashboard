@@ -1,3 +1,4 @@
+import React from "react";
 import { supabase } from "./supabase-client";
 
 /**
@@ -30,10 +31,33 @@ export type PointAwardRecord = {
   reason: string;
 };
 
-const TABLE_NAME_POINT_RECORDS = "PointRecords";
+const TABLE_NAME_POINT_RECORDS = "point_records";
 
-async function getPoints() {
-  const { data, error } = await supabase.from(TABLE_NAME_POINT_RECORDS);
+export async function getPoints(): Promise<PointAwardRecord[]> {
+  const { data, error } = await supabase
+    .from(TABLE_NAME_POINT_RECORDS)
+    .select(`*`);
+  // .eq("id", user!.id) // TODO: Fix this code smell
+  if (error) {
+    console.error(error);
+    throw error;
+  }
   console.log(data);
-  return;
+  return data;
+}
+
+/**
+ * Returns the point records for the entire program.
+ */
+export function usePointRecords() {
+  const [pointRecords, setPointRecords] = React.useState<PointAwardRecord[]>(
+    []
+  );
+
+  React.useEffect(() => {
+    getPoints().then((records) => {
+      setPointRecords(records);
+    });
+  }, []);
+  return pointRecords;
 }
