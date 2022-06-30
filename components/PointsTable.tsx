@@ -55,10 +55,11 @@ export default function PointsTable({ records }: PointsTableProps) {
 
   // TODO: Fetch timestamp from server because this is giving issues
   // const lastTime = new Date();
-  const lastTime = sortedRecords[sortedRecords.length - 1].timestamp;
+  const lastTime =
+    sortedRecords[sortedRecords.length - 1]?.timestamp ?? "right now";
 
   return (
-    <table className="text-lg shadow-md rounded-lg bg-white dark:bg-gray-700 table-auto">
+    <table className="w-full text-lg shadow-md rounded-lg bg-white dark:bg-gray-700 table-auto">
       <caption className="text-center p-2">
         Points as of {lastTime.toLocaleString("en-US")}.
       </caption>
