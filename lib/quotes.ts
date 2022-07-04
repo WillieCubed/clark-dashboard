@@ -2,7 +2,10 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import React from 'react';
 
 export type BaseQuote = {
-  id: string;
+  /**
+   * The unique ID of the quote.
+   */
+  id: number;
   created: Date;
   content: string;
   attribution: string;
