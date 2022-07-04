@@ -25,7 +25,8 @@ export default function QuoteAddBlock({ onQuoteSubmit }: QuoteAddBlockProps) {
   const [author, setAuthor] = React.useState(''); // TODO: Add support for Clarkie authors
 
   const isValidSubmission = () => {
-    return content.trim().length !== 0;
+    return content.trim().length !== 0
+      && author.trim().length !== 0;
   };
 
   const submitQuote = (event: React.SyntheticEvent<HTMLFormElement>) => {
