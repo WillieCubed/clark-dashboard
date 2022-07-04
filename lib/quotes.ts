@@ -98,7 +98,6 @@ export function useQuotes(supabaseClient: SupabaseClient) {
       .from(TABLE_NAME_QUOTE_RECORDS)
       .insert(quote)
       .abortSignal(abortController.signal);
-    console.log(result);
     const { data, error } = result;
     if (error || !data) {
       if (!abortController.signal.aborted) {
@@ -106,7 +105,10 @@ export function useQuotes(supabaseClient: SupabaseClient) {
         // No need to log otherwise
       }
     }
-    return data as unknown as Quote;
+    const addedQuotes = data as Quote[];
+    const addedQuote = addedQuotes[0];
+    addedQuote.created = new Date(addedQuote.created);
+    return addedQuote;
   }
 
   React.useEffect(() => {
