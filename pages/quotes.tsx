@@ -4,9 +4,10 @@ import supabase from '../lib/hooks/supabase';
 import SiteFooter from '../components/SiteFooter';
 import { useQuotes } from '../lib/quotes';
 import QuoteList from '../components/QuoteList';
+import QuoteAddBlock from '../components/quotes/QuoteAddForm';
 
 const HomePage: NextPage = () => {
-  const quotes = useQuotes(supabase);
+  const { quotes, submitQuote } = useQuotes(supabase);
 
   return (
     <>
@@ -31,7 +32,13 @@ const HomePage: NextPage = () => {
         Clark Quote Tracker
       </header>
       <main className="min-h-[80vh] lg:mx-auto max-w-xl">
-        <QuoteList quotes={quotes} />
+        <div className="">
+          <QuoteAddBlock onQuoteSubmit={submitQuote} />
+          <section id="list" className="p-4 my-4 bg-white rounded-lg">
+            <h1 className="mt-2 mb-4 text-2xl font-bold">All Quotes</h1>
+            <QuoteList quotes={quotes} />
+          </section>
+        </div>
       </main>
       <SiteFooter />
     </>

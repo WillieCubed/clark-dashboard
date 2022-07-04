@@ -41,9 +41,14 @@ export type Quote =
   // | ClarkQuote
   BaseQuote;
 
-const TABLE_NAME_QUOTE_RECORDS = "quotes";
+const TABLE_NAME_QUOTE_RECORDS = 'quotes';
 
-export function useQuotes(supabaseClient: SupabaseClient): Quote[] {
+export type AddableQuote = Omit<Quote, 'id'>;
+
+/**
+ * A hook to access and modify quotes.
+ */
+export function useQuotes(supabaseClient: SupabaseClient) {
   const [quotes, setQuotes] = React.useState<Quote[]>([]);
 
   /**
@@ -53,8 +58,9 @@ export function useQuotes(supabaseClient: SupabaseClient): Quote[] {
    * @return A list of all quotes
    */
   async function getQuotes(abortController: AbortController): Promise<Quote[]> {
-    console.log('Fetching quotes')
-    const result = await supabaseClient.from(TABLE_NAME_QUOTE_RECORDS)
+    console.log('Fetching quotes');
+    const result = await supabaseClient
+      .from(TABLE_NAME_QUOTE_RECORDS)
       .select('id, created, content, attribution, clarkieAttribution (name)')
       .abortSignal(abortController.signal);
     console.log(result);
@@ -77,12 +83,62 @@ export function useQuotes(supabaseClient: SupabaseClient): Quote[] {
     });
   }
 
+  /**
+   * Add a quote to the database.
+   *
+   * @param quote The quote to insert
+   * @param abortController A controller to stop the insertion
+   * @return The added quote
+   */
+  async function addQuote(
+    quote: AddableQuote,
+    abortController: AbortController
+  ): Promise<Quote> {
+    const result = await supabaseClient
+      .from(TABLE_NAME_QUOTE_RECORDS)
+      .insert(quote)
+      .abortSignal(abortController.signal);
+    console.log(result);
+    const { data, error } = result;
+    if (error || !data) {
+      if (!abortController.signal.aborted) {
+        console.error(error);
+        // No need to log otherwise
+      }
+    }
+    return data as unknown as Quote;
+  }
+
   React.useEffect(() => {
+    // Refresh on hook load
+    return refreshQuotes();
+  }, []);
+
+  const refreshQuotes = () => {
     const abortController = new AbortController();
     getQuotes(abortController).then(setQuotes);
     return () => {
-      abortController.abort()
+      abortController.abort();
     };
-  }, [])
-  return quotes
+  };
+
+  const submitQuote = (quote: AddableQuote) => {
+    const abortController = new AbortController();
+    addQuote(quote, abortController)
+      .then((quote: Quote) => {
+        setQuotes([...quotes, quote]);
+      })
+      .catch((error) => {
+        console.error('Could not submit quote', error);
+      });
+    return () => {
+      abortController.abort();
+    };
+  };
+
+  return {
+    quotes,
+    submitQuote,
+    refreshQuotes,
+  };
 }
