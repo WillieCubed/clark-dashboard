@@ -11,8 +11,19 @@ A live deployment can be found at [clark.williecubed.dev](clark.williecubed.dev)
 
 ## Getting Started
 
-After cloning the repository and installing the rependencies using
-`npm install`, run the development server:
+This project requires a working installation of Node.js (>= v16) and NPM (>= v7)
+
+After cloning the repository, set up Husky and prettier to run on commit:
+
+```bash
+npx husky install
+npm pkg set scripts.prepare="husky install"
+npx husky add .husky/pre-commit "npx lint-staged"
+```
+
+Then install the rependencies using `npm install`,
+
+Now you can run the development server:
 
 ```bash
 npm run dev
