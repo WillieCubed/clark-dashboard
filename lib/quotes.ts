@@ -6,6 +6,10 @@ export type BaseQuote = {
   created: Date;
   content: string;
   attribution: string;
+  /**
+   * The UUID of the user who submitted the quote.
+   */
+  submitter: string;
 };
 
 export type ClarkQuote = BaseQuote & {
