@@ -31,12 +31,18 @@ const HomePage: NextPage = () => {
       <header className="p-12 text-4xl font-bold text-center bg-blue-200 dark:bg-blue-800">
         Clark Quote Tracker
       </header>
-      <main className="min-h-[80vh] lg:mx-auto max-w-xl">
+      <main className="min-h-[80vh] md:mx-auto max-w-xl">
         <div className="">
-          <QuoteAddBlock onQuoteSubmit={submitQuote} />
-          <section id="list" className="p-4 my-4 bg-white rounded-lg">
+          <section className="p-4 mt-4">
+            <p className="text-lg text-center">Out of context? Yep. See what Clarkies are saying here or...</p>
+            <a className="mt-2 block text-lg text-secondary text-center font-bold" href="#submit">Submit a quote!</a>
+          </section>
+          <section id="list" className="p-4 mt-4 bg-white md:rounded-lg">
             <h1 className="mt-2 mb-4 text-2xl font-bold">All Quotes</h1>
             <QuoteList quotes={quotes} />
+          </section>
+          <section id="submit" className="mt-4 md:mb-4">
+            <QuoteAddBlock onQuoteSubmit={submitQuote} />
           </section>
         </div>
       </main>

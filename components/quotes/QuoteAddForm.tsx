@@ -59,14 +59,15 @@ export default function QuoteAddBlock({ onQuoteSubmit }: QuoteAddBlockProps) {
   };
 
   return (
-    <div className="rounded-lg shadow-sm bg-white dark:bg-slate-900 p-4 my-4">
-      <h1 className="mt-2 mb-4 font-bold font-display text-2xl">
+    <div className="md:rounded-lg shadow-sm bg-white dark:bg-slate-900 p-4 md:my-4">
+      <h1 className="mt-2 mb-2 font-bold font-display text-2xl">
         Submit a Quote
       </h1>
+      <p className="mb-4 text-sm opacity-80">* indicates required fields.</p>
       <form onSubmit={submitQuote}>
         <div>
           <label className="font-semibold" htmlFor="quoteContent">
-            Quote content
+            Quote content*
           </label>
           <textarea
             className="w-full p-2 mt-2 rounded-md resize-none bg-slate-50"
@@ -78,13 +79,13 @@ export default function QuoteAddBlock({ onQuoteSubmit }: QuoteAddBlockProps) {
             onChange={handleContentUpdate}
           />
         </div>
-        <div className="my-2">
-          <label className="font-semibold" htmlFor="quoteAuthor">
-            Quote author
+        <div className="my-2 flex">
+          <label className="mr-4 my-auto font-semibold" htmlFor="quoteAuthor">
+            Quote author*
           </label>
           <input
             type="text"
-            className="w-full p-2 mt-2 rounded-md resize-none bg-slate-50"
+            className="flex-1 p-2 mt-2 rounded-md resize-none bg-slate-50"
             name="attribution"
             id="quoteAuthor"
             placeholder={QUOTE_AUTHOR_PLACEHOLDER}
@@ -94,27 +95,29 @@ export default function QuoteAddBlock({ onQuoteSubmit }: QuoteAddBlockProps) {
         </div>
         <div className="my-2 flex">
           <label
-            className="inline-block mr-4 font-semibold align-middle"
+            className="mr-4 my-auto font-semibold align-middle"
             htmlFor="quoteTimestamp"
           >
-            Quote Timestamp
+            Quote timestamp
           </label>
           <input
             type="datetime-local"
-            className="inline-block flex-1 p-2 mt-2 rounded-md resize-none bg-slate-50"
+            className="flex-1 p-2 rounded-md resize-none bg-slate-50"
             name="timestamp"
             id="quoteTimestamp"
             value={timestamp}
             onChange={handleTimestampUpdate}
           />
         </div>
-        <button
-          type="submit"
-          className="py-2 px-4 shadow-md hover:shadow-lg disabled:shadow-none bg-secondary disabled:bg-gray-200 font-bold text-white rounded-md transition ease-in duration-150"
-          disabled={!isValidSubmission}
-        >
-          Submit
-        </button>
+        <div className="flex flex-row-reverse m">
+          <button
+            type="submit"
+            className="py-2 px-4 shadow-md hover:shadow-lg disabled:shadow-none bg-secondary disabled:bg-gray-200 font-bold text-white rounded-md transition ease-in duration-150"
+            disabled={!isValidSubmission()}
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );
