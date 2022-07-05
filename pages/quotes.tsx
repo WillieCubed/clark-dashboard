@@ -24,6 +24,10 @@ const HomePage: NextPage = () => {
           content="Clark Summer Research Program Dashboard"
         />
         <meta name="og:title" content="Quote Tracker" />
+        <meta
+          name="og:description"
+          content="See all the amusing things Clarkies have said during the 2022 Clark Summer Research Program. Probably safe for work."
+        />
         <meta name="og:image" content="/meta-thumbnails/clark-quotes.jpg" />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:alt" content="" />
@@ -34,8 +38,15 @@ const HomePage: NextPage = () => {
       <main className="min-h-[80vh] md:mx-auto max-w-xl">
         <div className="">
           <section className="p-4 mt-4">
-            <p className="text-lg text-center">Out of context? Yep. See what Clarkies are saying here or...</p>
-            <a className="mt-2 block text-lg text-secondary text-center font-bold" href="#submit">Submit a quote!</a>
+            <p className="text-lg text-center">
+              Out of context? Yep. See what Clarkies are saying here or...
+            </p>
+            <a
+              className="mt-2 block text-lg text-secondary text-center font-bold"
+              href="#submit"
+            >
+              Submit a quote!
+            </a>
           </section>
           <section id="list" className="p-4 mt-4 bg-white md:rounded-lg">
             <h1 className="mt-2 mb-4 text-2xl font-bold">All Quotes</h1>
