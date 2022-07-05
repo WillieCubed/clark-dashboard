@@ -1,9 +1,9 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
 
 function PointsApp({ Component, pageProps }: AppProps) {
   return (
-    <div className="dark:bg-slate-900 dark:text-slate-100 min-h-screen">
+    <div className="dark:bg-slate-900 dark:text-slate-100 bg-slate-100 min-h-screen">
       <Component {...pageProps} />
     </div>
   );
